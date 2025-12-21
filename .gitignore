@@ -1,0 +1,37 @@
+# Windows Docker Optimized
+
+# Storage
+windows/
+*.img
+*.qcow2
+*.iso
+
+# Environment files with secrets
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+dist/
+build/

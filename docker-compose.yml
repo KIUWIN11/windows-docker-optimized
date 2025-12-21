@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  windows:
+    image: dockurr/windows:latest
+    container_name: windows11
+    hostname: windows11
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+      - /dev/vhost-net:/dev/vhost-net
+    environment:
+      VERSION: "11"
+      KVM: "N"
+      RAM_SIZE: "64G"
+      CPU_CORES: "16"
+      DISK_SIZE: "200G"
+      DISK_IO: "threads"
+      DISK_CACHE: "writeback"
+      DISK_TYPE: "blk"
+      DISK_FMT: "raw"
+      DISK_DISCARD: "on"
+      DISK_ROTATION: "1"
+      ALLOCATE: "N"
+      MACHINE: "q35"
+      VGA: "virtio"
+      USERNAME: "Admin"
+      PASSWORD: "Admin123"
+      SAMBA: "Y"
+      TPM: "N"
+      SMM: "N"
+      HPET: "off"
+      VMPORT: "off"
+      ARGUMENTS: "-accel tcg,thread=multi,tb-size=2048 -cpu max,+ssse3,+sse4.1,+sse4.2,+popcnt,+avx,+avx2,+aes,+xsave,+xsaveopt,+rdrand,+f16c,+bmi1,+bmi2,+fma,+movbe,+smep,+erms,+adx,+sha-ni,+clflushopt -smp 16,sockets=1,cores=16,threads=1 -overcommit mem-lock=off -rtc base=localtime,clock=host,driftfix=slew -global ICH9-LPC.disable_s3=1 -global ICH9-LPC.disable_s4=1 -boot menu=off,strict=on"
+    ports:
+      - "8006:8006"
+      - "3389:3389/tcp"
+      - "3389:3389/udp"
+      - "2222:22"
+    volumes:
+      - ./windows:/storage
+      - ./oem:/oem
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,exec,size=8g
+    deploy:
+      resources:
+        limits:
+          cpus: "20"
+          memory: 72G
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65535
+        hard: 65535
+    restart: always
+    stop_grace_period: 2m
