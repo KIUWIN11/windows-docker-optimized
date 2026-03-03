@@ -12,9 +12,9 @@ services:
       VERSION: "11"
       RAM_SIZE: "8G"
       CPU_CORES: "4"
-      DISK_SIZE: "64G"
-      USERNAME: "Admin"
-      PASSWORD: "Admin123"
+      DISK_SIZE: "513G"
+      USERNAME: "HappyGhastQwQ"
+      PASSWORD: "kiubby"
     ports:
       - "8006:8006"
       - "3389:3389/tcp"
